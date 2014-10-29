@@ -115,6 +115,8 @@ namespace UsabilityDynamics\API_Manager {
         if ( empty( $data ) || $data === false ) {
           $this->error( '101', __( 'No matching API license key exists. Activation error', 'woocommerce-api-manager' ), null, array( 'activated' => false ) );
         }
+        
+        //echo "<pre>"; print_r( $data ); echo "</pre>"; die();
 
         // Validate order if set
         if ( $data['order_id'] ) {
@@ -387,7 +389,7 @@ namespace UsabilityDynamics\API_Manager {
              * If other activations already exist
              */
           $new_info = array_merge_recursive( $activation_info, $current_info );
-
+          
           update_user_meta( $data['user_id'], $wpdb->get_blog_prefix() . WCAM()->helpers->user_meta_key_activations . $data['order_key'], $new_info );
 
           if ( get_option( 'woocommerce_api_manager_activation_order_note' ) == 'yes' ) {
@@ -406,7 +408,7 @@ namespace UsabilityDynamics\API_Manager {
           return true;
 
         } else { // if this is the first activation for this order_key
-
+        
           // If this is the first activation
           update_user_meta( $data['user_id'], $wpdb->get_blog_prefix() . WCAM()->helpers->user_meta_key_activations . $data['order_key'], $activation_info );
 
@@ -600,11 +602,6 @@ namespace UsabilityDynamics\API_Manager {
         $this->check_required( array( 'licence_key', 'product_id', 'instance' ) );
 
         $input = $this->check_input( array( 'email', 'licence_key', 'product_id', 'platform', 'instance' ) );
-
-        // Validate email
-        if ( ! is_email( $input['email'] ) || empty( $input['email'] ) ) {
-          $this->error( '100', __( 'The email provided is invalid. Activation error', 'woocommerce-api-manager' ), null, array( 'activated' => false ) );
-        }
 
         if ( empty( $input['licence_key'] ) ) {
           $this->error( '105', null, null, array( 'activated' => false ) );
