@@ -24,6 +24,11 @@ namespace UsabilityDynamics\API_Manager {
        * Instantaite class.
        */
       public function init() {
+        if( !function_exists( 'WCAM' ) ) {
+          $this->errors->add( __( 'It requires WooCommerce API Manager plugin. Be sure it\'s installed and activated.', $this->domain ), 'error' );
+          return false;
+        }
+        
         /**
          * Redeclare Software API
          */
