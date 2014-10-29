@@ -25,9 +25,12 @@ namespace UsabilityDynamics\API_Manager {
        */
       public function init() {
         /**
-         * Software API
+         * Redeclare Software API
          */
-        add_action( 'woocommerce_api_ud-software-api', array( $this, 'handle_software_api_request' ) );
+        if( has_action( 'woocommerce_api_am-software-api', array( WCAM(), 'handle_software_api_request' ) ) ) {
+          remove_action( 'woocommerce_api_am-software-api', array( WCAM(), 'handle_software_api_request' ) );
+        }
+        add_action( 'woocommerce_api_am-software-api', array( $this, 'handle_software_api_request' ) );
         
         //* order_complete function saves user_meta data to be used by the email template and the API Manager */
         add_action( 'woocommerce_order_status_completed', array( $this, 'order_complete' ), 100 );

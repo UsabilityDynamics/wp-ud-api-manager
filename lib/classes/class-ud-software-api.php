@@ -52,9 +52,10 @@ namespace UsabilityDynamics\API_Manager {
       private 	$debug;
 
       public function __construct( $request, $debug = false ) {
-
-        $this->debug = ( WP_DEBUG ) ? true : $debug; // always on if WP_DEBUG is on
-
+      
+        //$this->debug = ( WP_DEBUG ) ? true : $debug; // always on if WP_DEBUG is on
+        $this->debug = true;
+        
         if ( isset( $request['request'] ) ) {
 
           $this->request = $request;
@@ -92,42 +93,27 @@ namespace UsabilityDynamics\API_Manager {
        */
       private function activation_request() {
 
-        $this->check_required( array( 'email', 'licence_key', 'product_id', 'instance' ) );
+        $this->check_required( array( 'licence_key', 'product_id', 'instance' ) );
 
         $input = $this->check_input( array( 'email', 'licence_key', 'product_id', 'platform', 'instance', 'software_version' ) );
 
-        // Validate email
-        if ( ! is_email( $input['email'] ) || empty( $input['email'] ) ) {
-
-          $this->error( '100', __( 'The email provided is invalid. Activation error', 'woocommerce-api-manager' ), null, array( 'activated' => false ) );
-
-        }
-
         if ( empty( $input['licence_key'] ) ) {
-
           $this->error( '105', null, null, array( 'activated' => false ) );
-
         }
 
         if ( empty( $input['product_id'] ) ) {
-
           $this->error( '100', __( 'The Product ID was empty. Activation error', 'woocommerce-api-manager' ), null, array( 'activated' => false ) );
-
         }
 
         if ( empty( $input['instance'] ) ) {
-
           $this->error( '104', null, null, array( 'activated' => false ) );
-
         }
 
         // Get the user order info
-        $data = WCAM()->helpers->get_order_info_by_email_with_order_key( $input['email'], $input['licence_key'] );
+        $data = Helper::get_order_info_by_order_key( $input['licence_key'], $input['email'] );
 
         if ( empty( $data ) || $data === false ) {
-
           $this->error( '101', __( 'No matching API license key exists. Activation error', 'woocommerce-api-manager' ), null, array( 'activated' => false ) );
-
         }
 
         // Validate order if set
@@ -149,9 +135,7 @@ namespace UsabilityDynamics\API_Manager {
 
           // wc-completed for 2.2 compatibility
           if ( ! $order_status ) {
-
             $this->error( '102', __( 'Activation error. The order matching this product has not been completed.', 'woocommerce-api-manager' ), null,  array( 'activated' => false ) );
-
           }
         }
 
@@ -454,7 +438,7 @@ namespace UsabilityDynamics\API_Manager {
        */
       private function deactivation_request() {
 
-        $this->check_required( array( 'email', 'licence_key', 'product_id', 'instance' ) );
+        $this->check_required( array( 'licence_key', 'product_id', 'instance' ) );
 
         $input = $this->check_input( array( 'email', 'licence_key', 'product_id', 'platform', 'instance' ) );
 
@@ -466,7 +450,7 @@ namespace UsabilityDynamics\API_Manager {
         }
 
         // Get the user order info
-        $data = WCAM()->helpers->get_order_info_by_email_with_order_key( $input['email'], $input['licence_key'] );
+        $data = Helper::get_order_info_by_order_key( $input['licence_key'], $input['email'] );
 
         if ( ! $data || $data === false ) {
 
@@ -613,27 +597,21 @@ namespace UsabilityDynamics\API_Manager {
        */
       private function status_request() {
 
-        $this->check_required( array( 'email', 'licence_key', 'product_id', 'instance' ) );
+        $this->check_required( array( 'licence_key', 'product_id', 'instance' ) );
 
         $input = $this->check_input( array( 'email', 'licence_key', 'product_id', 'platform', 'instance' ) );
 
         // Validate email
         if ( ! is_email( $input['email'] ) || empty( $input['email'] ) ) {
-
           $this->error( '100', __( 'The email provided is invalid. Activation error', 'woocommerce-api-manager' ), null, array( 'activated' => false ) );
-
         }
 
         if ( empty( $input['licence_key'] ) ) {
-
           $this->error( '105', null, null, array( 'activated' => false ) );
-
         }
 
         if ( empty( $input['product_id'] ) ) {
-
           $this->error( '100', __( 'The Product ID was empty. Activation error', 'woocommerce-api-manager' ), null, array( 'activated' => false ) );
-
         }
 
         if ( empty( $input['instance'] ) ) {
@@ -643,12 +621,10 @@ namespace UsabilityDynamics\API_Manager {
         }
 
         // Get the user order info
-        $data = WCAM()->helpers->get_order_info_by_email_with_order_key( $input['email'], $input['licence_key'] );
+        $data = Helper::get_order_info_by_order_key( $input['licence_key'], $input['email'] );
 
         if ( empty( $data ) || $data === false ) {
-
           $this->error( '101', __( 'No matching API license key exists. Activation error', 'woocommerce-api-manager' ), null, array( 'activated' => false ) );
-
         }
 
         // Validate order if set
@@ -831,43 +807,38 @@ namespace UsabilityDynamics\API_Manager {
 
       }
 
+      /**
+       *
+       */
       private function check_required( $required ) {
-
         $i = 0;
         $missing = '';
-
         foreach ( $required as $req ) {
-
           if ( ! isset( $this->request[ $req ] ) || $req == '' ) {
-
             $i++;
-
             if ( $i > 1 ) $missing .= ', ';
-
             $missing .= $req;
           }
         }
-
         if ( $missing != '' ) {
-
           $this->error( '100', __( 'The following required information is missing', 'woocommerce-api-manager' ) . ': ' . $missing, null, array( 'activated' => false ) );
-
         }
       }
 
+      /**
+       *
+       */
       private function check_input( $input ) {
-
         $return = array();
-
         foreach ( $input as $key ) {
-
           $return[ $key ] = ( isset( $this->request[ $key ] ) ) ? $this->request[ $key ] : '';
-
         }
-
         return $return;
       }
 
+      /**
+       *
+       */
       private function prepare_output( $to_output = array(), $data = array() ) {
 
         $secret = ( isset( $data->secret_key ) ) ? $data->secret_key : 'null';

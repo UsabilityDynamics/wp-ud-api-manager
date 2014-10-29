@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'UsabilityDynamics\\API_Manager\\Bootstrap' => $baseDir . '/lib/classes/class-bootstrap.php',
+    'UsabilityDynamics\\API_Manager\\Helper' => $baseDir . '/lib/classes/class-helper.php',
     'UsabilityDynamics\\API_Manager\\UD_Software_API' => $baseDir . '/lib/classes/class-ud-software-api.php',
     'UsabilityDynamics\\Job' => $vendorDir . '/usabilitydynamics/lib-utility/lib/class-job.php',
     'UsabilityDynamics\\Loader' => $vendorDir . '/usabilitydynamics/lib-utility/lib/class-loader.php',
