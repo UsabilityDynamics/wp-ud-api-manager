@@ -444,13 +444,6 @@ namespace UsabilityDynamics\API_Manager {
 
         $input = $this->check_input( array( 'email', 'licence_key', 'product_id', 'platform', 'instance' ) );
 
-        // Validate email
-        if ( ! is_email( $input['email'] ) ) {
-
-          $this->error( '100', __( 'Deactivation error. The email provided is invalid', 'woocommerce-api-manager' ), null, array( 'reset' => false ) );
-
-        }
-
         // Get the user order info
         $data = Helper::get_order_info_by_order_key( $input['licence_key'], $input['email'] );
 
