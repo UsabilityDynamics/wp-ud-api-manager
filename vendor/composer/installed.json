@@ -1,16 +1,16 @@
 [
     {
         "name": "usabilitydynamics/lib-utility",
-        "version": "0.3.2",
-        "version_normalized": "0.3.2.0",
+        "version": "0.3.6",
+        "version_normalized": "0.3.6.0",
         "source": {
             "type": "git",
             "url": "git@github.com:usabilitydynamics/lib-utility",
-            "reference": "0.3.2"
+            "reference": "0.3.6"
         },
         "dist": {
             "type": "zip",
-            "url": "https://github.com/usabilitydynamics/lib-utility/archive/0.3.2.zip",
+            "url": "https://github.com/usabilitydynamics/lib-utility/archive/0.3.6.zip",
             "reference": null,
             "shasum": null
         },

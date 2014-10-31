@@ -30,6 +30,14 @@ namespace UsabilityDynamics\API_Manager {
         }
         
         /**
+         * Redeclare Upgrade API
+         */
+        if( has_action( 'woocommerce_api_upgrade-api', array( WCAM(), 'handle_upgrade_api_request' ) ) ) {
+          remove_action( 'woocommerce_api_upgrade-api', array( WCAM(), 'handle_upgrade_api_request' ) );
+        }
+        add_action( 'woocommerce_api_upgrade-api', array( $this, 'handle_upgrade_api_request' ) );
+        
+        /**
          * Redeclare Software API
          */
         if( has_action( 'woocommerce_api_am-software-api', array( WCAM(), 'handle_software_api_request' ) ) ) {
@@ -54,9 +62,18 @@ namespace UsabilityDynamics\API_Manager {
       }
       
       /**
+       * Processes all Software Update Requests
+       *
+       * @return UD_Update_API
+       */
+      public function handle_upgrade_api_request() {
+        return UD_Update_API::instance( $_REQUEST );
+      }
+      
+      /**
        * Processes all Software Activation/Deactivation Requests
        *
-       * @return WC_API_Manager_Software_API
+       * @return UD_Software_API
        */
       public function handle_software_api_request() {
         return UD_Software_API::instance( $_REQUEST );
