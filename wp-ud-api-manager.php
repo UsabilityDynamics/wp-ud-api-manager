@@ -4,7 +4,7 @@
  * Plugin URI: https://usabilitydynamics.com
  * Description: WooCommerce API Manager Add-On. Gets rid of activation email requirement
  * Author: Usability Dynamics, Inc.
- * Version: 1.0.1
+ * Version: 1.0.2
  * Text Domain: ud-api-manager
  * Author URI: http://usabilitydynamics.com
  *
