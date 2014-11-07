@@ -59,6 +59,9 @@ namespace UsabilityDynamics\API_Manager {
         register_activation_hook( WAM_PLUGIN_FILE, array( $this, 'rebuild_licenses_relations' ) );
         add_action( 'woocommerce_api_manager_updated', array( $this, 'rebuild_licenses_relations' ), 100 );
         add_action( 'woocommerce_settings_tabs_api_manager', array( $this, 'api_manager_settings_page' ), 100 );
+        
+        Schema::init();
+        
       }
       
       /**

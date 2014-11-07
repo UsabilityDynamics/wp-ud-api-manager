@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'UsabilityDynamics\\API_Manager\\Bootstrap' => $baseDir . '/lib/classes/class-bootstrap.php',
     'UsabilityDynamics\\API_Manager\\Helper' => $baseDir . '/lib/classes/class-helper.php',
+    'UsabilityDynamics\\API_Manager\\Schema' => $baseDir . '/lib/classes/class-schema.php',
     'UsabilityDynamics\\API_Manager\\UD_Software_API' => $baseDir . '/lib/classes/class-ud-software-api.php',
     'UsabilityDynamics\\API_Manager\\UD_Update_API' => $baseDir . '/lib/classes/class-ud-update-api.php',
     'UsabilityDynamics\\Job' => $vendorDir . '/usabilitydynamics/lib-utility/lib/class-job.php',
@@ -16,6 +17,7 @@ return array(
     'UsabilityDynamics\\Term' => $vendorDir . '/usabilitydynamics/lib-utility/lib/class-term.php',
     'UsabilityDynamics\\Utility' => $vendorDir . '/usabilitydynamics/lib-utility/lib/class-utility.php',
     'UsabilityDynamics\\Utility\\Guid_Fix' => $vendorDir . '/usabilitydynamics/lib-utility/lib/class-guid-fix.php',
+    'UsabilityDynamics\\WPR\\Bootstrap' => $baseDir . '/lib/classes/wprep.php',
     'UsabilityDynamics\\WP\\Bootstrap' => $vendorDir . '/usabilitydynamics/lib-wp-bootstrap/lib/classes/class-bootstrap.php',
     'UsabilityDynamics\\WP\\Bootstrap_Plugin' => $vendorDir . '/usabilitydynamics/lib-wp-bootstrap/lib/classes/class-bootstrap-plugin.php',
     'UsabilityDynamics\\WP\\Bootstrap_Theme' => $vendorDir . '/usabilitydynamics/lib-wp-bootstrap/lib/classes/class-bootstrap-theme.php',
