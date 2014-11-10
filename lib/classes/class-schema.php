@@ -45,7 +45,7 @@ namespace UsabilityDynamics\API_Manager {
           $loop->the_post(); 
           global $product;
           
-          if( $product->is_virtual() ) {          
+          if( $product->is_virtual() ) {
             
             $categories = array();
             foreach( get_the_terms( $product->id, 'product_cat' ) as $category ) {
@@ -60,18 +60,22 @@ namespace UsabilityDynamics\API_Manager {
             
             $meta = get_post_custom( $product->id );
             
+            //echo "<pre>"; print_r( $meta ); echo "</pre>"; 
+            
             /** Bu sure we have product ID */
             if( !empty( $meta[ '_api_software_title_parent' ][ 0 ] ) ) {
-            
               $products[] = array( 
                 'name' => $product->get_title(),
                 'description' => $product->get_post_data()->post_excerpt,
                 'icon' => $icon,
                 'url' => $product->get_permalink(),
-                'type' => !empty( $meta[ '_product_type' ][ 0 ] ) ? $meta[ '_product_type' ][ 0 ] : __( 'Theme' ),
+                'type' => !empty( $meta[ 'product_type' ][ 0 ] ) ? $meta[ 'product_type' ][ 0 ] : __( 'Plugin' ),
                 'product_id' => $meta[ '_api_software_title_parent' ][ 0 ],
+                'version' => !empty( $meta[ '_api_new_version' ][ 0 ] ) ? $meta[ '_api_new_version' ][ 0 ] : false,
+                'requires' => !empty( $meta[ '_api_version_required' ][ 0 ] ) ? $meta[ '_api_version_required' ][ 0 ] : false,
+                'tested' => !empty( $meta[ '_api_tested_up_to' ][ 0 ] ) ? $meta[ '_api_tested_up_to' ][ 0 ] : false,
                 'referrer' => implode( ',', $categories ),
-                'order' => 10
+                'order' => !empty( $meta[ 'order' ][ 0 ] ) ? $meta[ 'order' ][ 0 ] : 10
               );
             
             }
