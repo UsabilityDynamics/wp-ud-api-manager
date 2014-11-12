@@ -58,9 +58,10 @@ namespace UsabilityDynamics\API_Manager {
               $icon = $icon[0];
             }
             
+            $order = $product->get_post_data()->menu_order;
             $meta = get_post_custom( $product->id );
             
-            //echo "<pre>"; print_r( $meta ); echo "</pre>"; 
+            //echo "<pre>"; print_r( $product ); echo "</pre>"; die();
             
             /** Bu sure we have product ID */
             if( !empty( $meta[ '_api_software_title_parent' ][ 0 ] ) ) {
@@ -75,7 +76,7 @@ namespace UsabilityDynamics\API_Manager {
                 'requires' => !empty( $meta[ '_api_version_required' ][ 0 ] ) ? $meta[ '_api_version_required' ][ 0 ] : false,
                 'tested' => !empty( $meta[ '_api_tested_up_to' ][ 0 ] ) ? $meta[ '_api_tested_up_to' ][ 0 ] : false,
                 'referrer' => implode( ',', $categories ),
-                'order' => !empty( $meta[ 'order' ][ 0 ] ) ? $meta[ 'order' ][ 0 ] : 10
+                'order' => $order > 0 ? $order : 10,
               );
             
             }

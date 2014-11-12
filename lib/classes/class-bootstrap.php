@@ -60,6 +60,9 @@ namespace UsabilityDynamics\API_Manager {
         add_action( 'woocommerce_api_manager_updated', array( $this, 'rebuild_licenses_relations' ), 100 );
         add_action( 'woocommerce_settings_tabs_api_manager', array( $this, 'api_manager_settings_page' ), 100 );
         
+        /** 
+         * Renders products list in JSON format {site_url}/products.json 
+         */
         Schema::init();
         
       }
